@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhamento Técnico | David Carvalho</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- REUTILIZANDO VARIÁVEIS DA HOME --- */
+        :root {
+            --cor-primaria: #F97316;      
+            --cor-primaria-hover: #EA580C; 
+            --bg-escura: #0F172A;         
+            --bg-clara: #F8FAFC;          
+            --texto-escuro: #1E293B;      
+            --texto-suave: #475569;       
+            --texto-claro: #CBD5E1;       
+            --branco: #FFFFFF;
+            --container: 1200px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--branco); color: var(--texto-escuro); line-height: 1.6; }
+
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+        a { text-decoration: none; transition: 0.3s; }
+        img { max-width: 100%; display: block; }
+
+        /* HEADER */
+        header {
+            background-color: var(--branco);
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { display: flex; align-items: center; gap: 12px; color: var(--bg-escura); }
+        .logo svg { height: 40px; width: auto; }
+        .logo-text h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; line-height: 1;}
+        .logo-text p { font-size: 0.75rem; opacity: 0.8; font-weight: 400; text-transform: uppercase; margin-top: 2px;}
+
+        /* Botão Voltar */
+        .btn-voltar {
+            display: flex; align-items: center; gap: 8px;
+            color: var(--texto-suave); font-weight: 600; font-size: 0.95rem;
+            padding: 8px 16px; border-radius: 8px;
+        }
+        .btn-voltar:hover { color: var(--cor-primaria); background: var(--bg-clara); }
+
+        /* TÍTULO DA PÁGINA */
+        .page-header {
+            background-color: var(--bg-escura);
+            padding: 80px 0;
+            text-align: center;
+            color: var(--branco);
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::before {
+            content: ''; position: absolute; top: -50%; left: -10%; width: 500px; height: 500px;
+            background: rgba(249, 115, 22, 0.1); border-radius: 50%; filter: blur(100px);
+        }
+        .page-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; position: relative; z-index: 10; }
+        .page-header p { font-size: 1.1rem; color: var(--texto-claro); max-width: 600px; margin: 0 auto; position: relative; z-index: 10; }
+
+        /* DETALHES */
+        .details-section { padding: 100px 0; }
+        
+        .detail-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+        .detail-row.reverse .detail-text { order: 2; }
+        .detail-row.reverse .detail-visual { order: 1; }
+
+        .detail-visual {
+            height: 400px;
+            background: var(--bg-clara);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .img-cover { width: 100%; height: 100%; object-fit: cover; }
+
+        .icon-badge {
+            display: inline-flex; width: 50px; height: 50px; 
+            background: #FFEDD5; color: var(--cor-primaria);
+            border-radius: 50%; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .detail-text h2 { font-size: 2rem; font-weight: 800; color: var(--texto-escuro); margin-bottom: 20px; line-height: 1.2;}
+        .detail-text p { font-size: 1.05rem; color: var(--texto-suave); margin-bottom: 30px; }
+
+        .feature-list { list-style: none; }
+        .feature-list li {
+            display: flex; gap: 15px; margin-bottom: 15px;
+            color: var(--texto-escuro); font-weight: 500;
+        }
+        .feature-list i { color: var(--cor-primaria); flex-shrink: 0; margin-top: 4px; }
+
+        /* CTA */
+        .cta-box {
+            background-color: var(--cor-primaria);
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            color: var(--branco);
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.2);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .cta-btn-white {
+            background: var(--branco); color: var(--cor-primaria);
+            padding: 16px 40px; border-radius: 8px; font-weight: 800;
+            display: inline-flex; align-items: center; gap: 10px; margin-top: 30px;
+            transition: 0.3s;
+        }
+        .cta-btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        /* FOOTER */
+        footer { background: #020617; color: var(--texto-suave); padding: 80px 0 30px; border-top: 1px solid #1E293B; }
+        .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 50px; }
+        .footer-logo { color: white; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;}
+        .footer-social a { color: var(--texto-suave); margin-left: 15px; transition: 0.3s; }
+        .footer-social a:hover { color: var(--cor-primaria); }
+        .copyright { border-top: 1px solid #1E293B; padding-top: 30px; display: flex; justify-content: space-between; font-size: 0.9rem; }
+
+        @media (max-width: 900px) {
+            .detail-row { grid-template-columns: 1fr; gap: 40px; margin-bottom: 80px; }
+            .detail-row.reverse .detail-text { order: 0; }
+            .detail-row.reverse .detail-visual { order: 0; }
+            .detail-visual { height: 250px; }
+            .page-header { padding: 60px 0; }
+            .page-header h1 { font-size: 2rem; }
+            .cta-box { padding: 40px 20px; }
+            .footer-top { flex-direction: column; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="30" width="25" height="40" rx="8" fill="#F59E0B" />
+                    <rect x="40" y="0" width="25" height="100" rx="8" fill="#F59E0B" />
+                    <rect x="70" y="0" width="25" height="30" rx="8" fill="#F59E0B" />
+                    <rect x="70" y="70" width="25" height="30" rx="8" fill="#F59E0B" />
+                </svg>
+                <div class="logo-text">
+                    <h1>DAVID CARVALHO</h1>
+                    <p>Consultoria e Modelagem</p>
+                </div>
+            </a>
+            <a href="index.html" class="btn-voltar">
+                <i data-lucide="arrow-left" size="18"></i> Voltar ao Início
+            </a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Detalhamento Técnico</h1>
+            <p>Entenda como cada etapa do processo funciona e agrega valor real ao seu produto.</p>
+        </div>
+    </section>
+
+    <section class="details-section">
+        <div class="container">
+
+            <div class="detail-row">
+                <div class="detail-text">
+                    <div class="icon-badge"><i data-lucide="layers"></i></div>
+                    <h2>Modelagem Digital</h2>
+                    <p>A base de tudo. No Audaces, desenvolvemos a modelagem do zero ou interpretamos croquis com precisão absoluta. Ao contrário do papel, aqui as curvas são perfeitas e a simetria é garantida matematicamente.</p>
+                    <ul class="feature-list">
+                        <li><i data-lucide="check"></i> Interpretação técnica de croquis e fotos.</li>
+                        <li><i data-lucide="check"></i> Redução drástica da necessidade de peças piloto.</li>
+                        <li><i data-lucide="check"></i> Conferência instantânea de perímetros de costura.</li>
+                    </ul>
+                </div>
+                <div class="detail-visual">
+                    <img src="./images/MOLDES.webp" alt="Modelagem Digital" class="img-cover">
+                </div>
+            </div>
+
+            <div class="detail-row reverse">
+                <div class="detail-text">
+                    <div class="icon-badge"><i data-lucide="file-digit"></i></div>
+                    <h2>Digitalização de Moldes</h2>
+                    <p>Muitas confecções ainda sofrem com moldes de papel rasgados ou perdidos. A digitalização resolve isso transformando seu acervo físico em arquivos seguros e editáveis.</p>
+                    <ul class="feature-list">
+                        <li><i data-lucide="check"></i> Segurança eterna do acervo (Backup na Nuvem).</li>
+                        <li><i data-lucide="check"></i> Facilidade para editar e relançar modelos antigos.</li>
+                        <li><i data-lucide="check"></i> Fim do "quarto da bagunça" de papel kraft.</li>
+                    </ul>
+                </div>
+                <div class="detail-visual">
+                    <img src="./images/DIGITALIZAÇÃO.webp" alt="Digitalização" class="img-cover">
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-text">
+                    <div class="icon-badge"><i data-lucide="maximize"></i></div>
+                    <h2>Graduação (Ampliação)</h2>
+                    <p>Ampliar tamanhos manualmente é demorado e gera erros. No sistema, aplicamos regras de graduação precisas (P, M, G ou Numérica), garantindo que a proporção e o caimento se mantenham em todos os tamanhos.</p>
+                    <ul class="feature-list">
+                        <li><i data-lucide="check"></i> Grade completa (do PP ao GG) feita em minutos.</li>
+                        <li><i data-lucide="check"></i> Respeito rigoroso à sua tabela de medidas.</li>
+                        <li><i data-lucide="check"></i> Encaixe perfeito entre laterais e cavas.</li>
+                    </ul>
+                </div>
+                <div class="detail-visual">
+                    <img src="./images/GRADUAÇÃO.webp" alt="Graduação e Medição" class="img-cover">
+                </div>
+            </div>
+
+            <div class="detail-row reverse">
+                <div class="detail-text">
+                    <div class="icon-badge"><i data-lucide="printer"></i></div>
+                    <h2>Encaixe e Risco</h2>
+                    <p>Aqui é onde o serviço se paga. O encaixe automático utiliza inteligência artificial para testar milhares de posições e encontrar o menor consumo possível de tecido.</p>
+                    <ul class="feature-list">
+                        <li><i data-lucide="check"></i> Economia média de 5% a 15% de tecido.</li>
+                        <li><i data-lucide="check"></i> Cálculo exato de consumo para compras de matéria-prima.</li>
+                        <li><i data-lucide="check"></i> Arquivo enviado pronto para plotter ou corte automático.</li>
+                    </ul>
+                </div>
+                <div class="detail-visual">
+                    <img src="./images/ezgif.com-gif-maker-25-4-scaled.webp" alt="Encaixe e Corte" class="img-cover">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="container" style="margin-bottom: 80px;">
+        <div class="cta-box">
+            <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 15px;">Pronto para profissionalizar sua produção?</h2>
+            <p>Vamos analisar qual a melhor solução para sua confecção hoje.</p>
+            <a href="https://wa.me/5585999171800" target="_blank" class="cta-btn-white">
+                Falar com David no WhatsApp <i data-lucide="message-circle" size="20"></i>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <svg style="height: 30px;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="30" width="25" height="40" rx="8" fill="#F59E0B" />
+                        <rect x="40" y="0" width="25" height="100" rx="8" fill="#F59E0B" />
+                        <rect x="70" y="0" width="25" height="30" rx="8" fill="#F59E0B" />
+                        <rect x="70" y="70" width="25" height="30" rx="8" fill="#F59E0B" />
+                    </svg>
+                    DAVID CARVALHO
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i data-lucide="instagram"></i></a>
+                    <a href="#"><i data-lucide="linkedin"></i></a>
+                    <a href="mailto:contato@exemplo.com"><i data-lucide="mail"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 DAVID CARVALHO. Todos os direitos reservados.</p>
+                <p>Desenvolvido com precisão digital.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body>
+</html>

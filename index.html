@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Carvalho | Consultoria e Modelagem Digital</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- CONFIGURAÇÕES GERAIS --- */
+        :root {
+            --cor-primaria: #F97316;
+            --cor-primaria-hover: #EA580C;
+            --bg-escura: #0F172A;
+            --bg-clara: #F8FAFC;
+            --texto-escuro: #1E293B;
+            --texto-suave: #475569;
+            --texto-claro: #CBD5E1;
+            --branco: #FFFFFF;
+            --container: 1200px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--branco); color: var(--texto-escuro); line-height: 1.6; }
+        a { text-decoration: none; transition: 0.3s; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        .container { max-width: var(--container); margin: 0 auto; padding: 0 20px; }
+
+        /* Botões */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; font-weight: 700; border-radius: 8px; cursor: pointer; transition: all 0.3s; gap: 10px; }
+        .btn-primary { background-color: var(--cor-primaria); color: var(--branco); box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3); }
+        .btn-primary:hover { background-color: var(--cor-primaria-hover); transform: translateY(-2px); }
+        .btn-outline { border: 2px solid #475569; color: var(--bg-escura); }
+        .btn-outline:hover { background-color: var(--cor-primaria); color: var(--branco); border-color: var(--branco); }
+
+        /* Header */
+        header { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 20px 0; transition: all 0.3s ease; background: transparent; }
+        header.scrolled { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 10px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { display: flex; align-items: center; gap: 12px; color: var(--branco); }
+        .logo svg { height: 40px; width: auto; }
+        .logo-text h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; line-height: 1;}
+        .logo-text p { font-size: 0.75rem; opacity: 0.8; font-weight: 400; text-transform: uppercase; margin-top: 2px;}
+
+        .nav-desktop { display: flex; gap: 30px; align-items: center; }
+        .nav-desktop a { color: var(--texto-claro); font-weight: 600; font-size: 0.95rem; }
+        .nav-desktop a:hover { color: var(--cor-primaria); }
+
+        .btn-whatsapp-nav { background: var(--cor-primaria); color: white !important; padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; }
+
+        header.scrolled .logo { color: var(--bg-escura); }
+        header.scrolled .nav-desktop a { color: var(--texto-suave); }
+        header.scrolled .nav-desktop a:hover { color: var(--cor-primaria); }
+        header.scrolled .mobile-menu-btn { color: var(--bg-escura); }
+
+        .mobile-menu-btn { display: none; color: white; cursor: pointer; }
+        .mobile-dropdown { position: absolute; top: 100%; left: 0; width: 100%; background: white; padding: 20px; flex-direction: column; gap: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: none; border-top: 1px solid #eee; }
+        .mobile-dropdown.active { display: flex; }
+        .mobile-dropdown a { color: var(--texto-escuro); font-weight: 600; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+
+        /* Hero */
+        .hero { background-color: var(--bg-escura); min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
+        .glow-effect { position: absolute; width: 500px; height: 500px; background: rgba(249, 115, 22, 0.1); border-radius: 50%; filter: blur(80px); z-index: 0; }
+        .glow-1 { top: -100px; right: -100px; }
+        .glow-2 { bottom: -100px; left: -100px; background: rgba(59, 130, 246, 0.1); }
+        .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 10; }
+        
+        .badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255,255,255,0.1); padding: 6px 16px; border-radius: 50px; color: var(--cor-primaria); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 25px; }
+        .hero h1 { color: var(--branco); font-size: 3.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 25px; }
+        .hero p { color: var(--texto-claro); font-size: 1.2rem; margin-bottom: 40px; max-width: 90%; }
+        .hero-actions { display: flex; gap: 15px; }
+
+        /* Imagem Hero Nova */
+        .hero-img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Diferenciais */
+        .diferenciais { background: var(--branco); padding: 80px 0; position: relative; margin-top: -50px; border-radius: 40px 40px 0 0; z-index: 20; box-shadow: 0 -10px 40px rgba(0,0,0,0.05); }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .feature-item { text-align: center; padding: 20px; border-radius: 15px; transition: 0.3s; }
+        .feature-item:hover { background: var(--bg-clara); }
+        .icon-circle { width: 60px; height: 60px; background: #FFEDD5; color: var(--cor-primaria); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; transition: 0.3s; }
+        .feature-item:hover .icon-circle { transform: scale(1.1); }
+        .feature-item h3 { margin-bottom: 10px; color: var(--texto-escuro); }
+
+        /* Serviços */
+        .servicos { padding: 100px 0; background: var(--bg-clara); }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 700px; margin: 0 auto 60px; }
+        .tag-small { color: var(--cor-primaria); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; display: block; margin-bottom: 10px;}
+        .title-large { font-size: 2.5rem; color: var(--texto-escuro); font-weight: 800; margin-bottom: 15px;}
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .service-card { background: var(--branco); padding: 40px; border-radius: 16px; display: flex; gap: 20px; align-items: flex-start; transition: 0.3s; border: 1px solid transparent; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); border-color: #FFEDD5; }
+        .service-icon { background: var(--bg-clara); padding: 12px; border-radius: 10px; color: var(--texto-suave); transition: 0.3s; }
+        .service-card:hover .service-icon { background: var(--cor-primaria); color: white; }
+        .service-card h3 { font-size: 1.25rem; margin-bottom: 10px; color: var(--texto-escuro); font-weight: 700; }
+
+        /* Quote */
+        .quote-section { background: var(--bg-escura); padding: 100px 0; text-align: center; position: relative; }
+        .quote-icon-box { display: inline-block; padding: 15px; background: var(--cor-primaria); color: white; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2); }
+        .quote-text { color: white; font-size: 2rem; font-weight: 700; max-width: 900px; margin: 0 auto; line-height: 1.4; }
+
+        /* Consultoria */
+        .consultoria { padding: 100px 0; background: var(--branco); overflow: hidden; }
+        .consultoria-wrapper { display: flex; align-items: center; gap: 80px; }
+        .checklist-item { display: flex; gap: 15px; margin-bottom: 25px; }
+        .checklist-item i { color: var(--cor-primaria); flex-shrink: 0; margin-top: 5px; }
+        .checklist-item h4 { font-weight: 700; color: var(--texto-escuro); margin-bottom: 5px; }
+        .image-box { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+        .stats-float { position: absolute; bottom: 30px; right: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        /* Footer */
+        footer { background: #020617; color: var(--texto-suave); padding: 80px 0 30px; border-top: 1px solid #1E293B; }
+        .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; margin-bottom: 50px; }
+        .footer-logo { color: white; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;}
+        .footer-social a { color: var(--texto-suave); margin-left: 15px; transition: 0.3s; }
+        .footer-social a:hover { color: var(--cor-primaria); }
+        .copyright { border-top: 1px solid #1E293B; padding-top: 30px; display: flex; justify-content: space-between; font-size: 0.9rem; }
+
+        @media (max-width: 1024px) { .grid-4 { grid-template-columns: 1fr 1fr; } .hero h1 { font-size: 2.8rem; } }
+        @media (max-width: 768px) { 
+            .nav-desktop { display: none; } .mobile-menu-btn { display: block; }
+            .hero { padding-top: 120px; text-align: center; } .hero-grid { grid-template-columns: 1fr; gap: 40px; } .hero-actions { justify-content: center; flex-direction: column; }
+            .hero-img { display: none; } /* Opcional: esconder imagem no mobile se ocupar mto espaço */
+            .grid-4, .grid-2 { grid-template-columns: 1fr; }
+            .consultoria-wrapper { flex-direction: column; } .quote-text { font-size: 1.4rem; }
+            .copyright { flex-direction: column; text-align: center; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="container header-content">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="30" width="25" height="40" rx="8" fill="#F59E0B" />
+                    <rect x="40" y="0" width="25" height="100" rx="8" fill="#F59E0B" />
+                    <rect x="70" y="0" width="25" height="30" rx="8" fill="#F59E0B" />
+                    <rect x="70" y="70" width="25" height="30" rx="8" fill="#F59E0B" />
+                </svg>
+                <div class="logo-text">
+                    <h1>DAVID CARVALHO</h1>
+                    <p>Consultoria e Modelagem</p>
+                </div>
+            </div>
+
+            <nav class="nav-desktop">
+                <a href="#diferenciais">Diferenciais</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#consultoria">Consultoria</a>
+                <a href="#contato">Contato</a>
+                <a href="https://wa.me/5585999171800" target="_blank" class="btn-whatsapp-nav">Falar no WhatsApp</a>
+            </nav>
+
+            <div class="mobile-menu-btn" onclick="toggleMenu()">
+                <i data-lucide="menu" size="28"></i>
+            </div>
+        </div>
+
+        <div class="mobile-dropdown" id="mobileMenu">
+            <a href="#diferenciais" onclick="toggleMenu()">Diferenciais</a>
+            <a href="#servicos" onclick="toggleMenu()">Serviços</a>
+            <a href="#consultoria" onclick="toggleMenu()">Consultoria</a>
+            <a href="#contato" onclick="toggleMenu()">Contato</a>
+            <a href="https://wa.me/5585999171800" style="color: var(--cor-primaria)">Falar no WhatsApp</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="glow-effect glow-1"></div>
+        <div class="glow-effect glow-2"></div>
+        <div class="container hero-grid">
+            <div>
+                <div class="badge">
+                    <span style="display:inline-block; width: 6px; height: 6px; background: var(--cor-primaria); border-radius: 50%; animation: pulse 2s infinite;"></span>
+                    Especialista Audaces
+                </div>
+                <h1>Modelagem digital e encaixes inteligentes para reduzir seus custos de produção.</h1>
+                <p>Soluções completas em Audaces para economizar matéria-prima, eliminar erros e aumentar a margem de lucro da sua confecção.</p>
+                <div class="hero-actions">
+                    <a href="https://wa.me/5585999171800" class="btn btn-primary">Quero Otimizar minha Produção <i data-lucide="arrow-right" size="18"></i></a>
+                    <!-- <a href="#servicos" class="btn btn-outline">Conhecer Serviços</a> -->
+                </div>
+            </div>
+            
+            <div>
+                <img src="./images/home_banner.jpg" alt="Profissional Audaces" class="hero-img">
+            </div>
+        </div>
+    </section>
+
+    <section id="diferenciais" class="diferenciais">
+        <div class="container">
+            <div class="grid-4">
+                <div class="feature-item">
+                    <div class="icon-circle"><i data-lucide="monitor"></i></div>
+                    <h3>+18 Anos de Experiência</h3>
+                    <p>Experiência real com todas as versões do Audaces.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-circle"><i data-lucide="scissors"></i></div>
+                    <h3>Economia de Tecido</h3>
+                    <p>Algoritmos de encaixe que maximizam cada centímetro.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-circle"><i data-lucide="cloud"></i></div>
+                    <h3>Agilidade Digital</h3>
+                    <p>Esqueça moldes de papel; tenha tudo na nuvem com segurança.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-circle"><i data-lucide="trending-up"></i></div>
+                    <h3>Suporte Estratégico</h3>
+                    <p>Mais que serviços, uma consultoria para o seu negócio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="servicos">
+        <div class="container">
+            <div class="section-header">
+                <span class="tag-small">Operação</span>
+                <h2 class="title-large">Excelência Técnica</h2>
+                <p style="color: var(--texto-suave);">Soluções práticas para o dia a dia da sua confecção, focadas em precisão e agilidade.</p>
+            </div>
+            <div class="grid-2">
+                <div class="service-card"><div class="service-icon"><i data-lucide="layers"></i></div><div><h3>Modelagem Digital</h3><p>Desenvolvimento técnico preciso, do básico ao complexo, garantindo o caimento perfeito.</p></div></div>
+                <div class="service-card"><div class="service-icon"><i data-lucide="file-digit"></i></div><div><h3>Digitalização de Moldes</h3><p>Traga seu acervo físico para o digital. Preserve sua modelagem e facilite edições futuras.</p></div></div>
+                <div class="service-card"><div class="service-icon"><i data-lucide="maximize"></i></div><div><h3>Graduação e Ampliação</h3><p>Escalonamento rápido e sem erros, mantendo a proporção exata em todos os tamanhos.</p></div></div>
+                <div class="service-card"><div class="service-icon"><i data-lucide="printer"></i></div><div><h3>Encaixe e Risco</h3><p>O aproveitamento que o encaixe manual não alcança. Geramos o arquivo pronto para corte.</p></div></div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="servicos.html" class="btn btn-outline" style="padding: 15px 40px; border-width: 2px;">Ver Detalhamento de Cada Etapa <i data-lucide="plus-circle" style="margin-left: 8px;"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="container">
+            <div class="quote-icon-box"><i data-lucide="quote"></i></div>
+            <h2 class="quote-text">"No papel, um erro de 1cm se torna um prejuízo de milhares de reais no fim do mês. No digital, cada milímetro é calculado para o lucro."</h2>
+            <div style="width: 80px; height: 4px; background: var(--cor-primaria); margin: 40px auto 0; border-radius: 2px;"></div>
+        </div>
+    </section>
+
+    <section id="consultoria" class="consultoria">
+        <div class="container consultoria-wrapper">
+            <div style="flex: 1;">
+                <span class="tag-small">Estratégia</span>
+                <h2 class="title-large">Muito além de um operador de software</h2>
+                <p style="margin-bottom: 30px; font-size: 1.1rem; color: var(--texto-suave);">Transforme sua equipe interna em um time de alta performance.</p>
+                <div class="checklist-item"><i data-lucide="check-circle-2"></i><div><h4>Consultoria para Empresas</h4><p style="font-size: 0.95rem; color: var(--texto-suave);">Análise de fluxo de trabalho para identificar onde você está perdendo dinheiro.</p></div></div>
+                <div class="checklist-item"><i data-lucide="check-circle-2"></i><div><h4>Treinamento In-Company</h4><p style="font-size: 0.95rem; color: var(--texto-suave);">Capacitação da sua equipe para dominar as ferramentas do Audaces.</p></div></div>
+                <a href="https://wa.me/5585999171800" class="btn btn-primary" style="margin-top: 20px;">Agendar Diagnóstico</a>
+            </div>
+            <div style="flex: 1;" class="image-box">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80" alt="Consultoria">
+                <div class="stats-float">
+                    <div style="color: #64748B; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Resultado Médio</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--bg-escura);">+25%</div>
+                    <div style="color: #475569; font-size: 0.9rem;">Produtividade</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <svg style="height: 30px;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="30" width="25" height="40" rx="8" fill="#F59E0B" />
+                        <rect x="40" y="0" width="25" height="100" rx="8" fill="#F59E0B" />
+                        <rect x="70" y="0" width="25" height="30" rx="8" fill="#F59E0B" />
+                        <rect x="70" y="70" width="25" height="30" rx="8" fill="#F59E0B" />
+                    </svg>
+                    DAVID CARVALHO
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/modelistadavidcarvalho?igsh=NWg2aG14bnM4cTQy" target="_blank"><i data-lucide="instagram"></i></a>
+                    <!-- <a href="#"><i data-lucide="linkedin"></i></a> -->
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=davidcarvalhomodelista@gmail.com" target="_blank"><i data-lucide="mail"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 DAVID CARVALHO. Todos os direitos reservados.</p>
+                <p>Desenvolvido por David Carvalho</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
+        });
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+            if (menu.classList.contains('active')) { header.classList.add('scrolled'); } else if (window.scrollY <= 50) { header.classList.remove('scrolled'); }
+        }
+    </script>
+</body>
+</html>
